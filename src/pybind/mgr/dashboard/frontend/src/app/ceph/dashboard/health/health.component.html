@@ -1,46 +1,48 @@
-<div *ngIf="contentData">
-  <div class="row">
-    <!-- HEALTH -->
-    <cd-info-card title="Health">
-      <hr class="media-underline" />
-      <ng-container i18n>Overall status: </ng-container>
-      <span [ngStyle]="contentData.health.status | healthColor">{{ contentData.health.status }}</span>
-      <ul>
-        <li *ngFor="let check of contentData.health.checks">
-          <span [ngStyle]="check.severity | healthColor">{{ check.type }}</span>: {{ check.summary.message }}
-        </li>
-      </ul>
-    </cd-info-card>
+<div *ngIf="contentData" class="container-fluid container-cards-pf">
+  <div style="border: 1px solid #e5e5e5;" class="">
+    <fieldset>
+      <legend>Configuration</legend>
+      <div class="">
+        <cd-info-card title="Health"
+                      cardClass="col-md-3">
+          <span [ngStyle]="contentData.health.status | healthColor">{{ contentData.health.status }}</span>
+        </cd-info-card>
 
-    <div class="col-md-6">
-      <!--STATS -->
-      <div class="row">
-        <cd-info-card title="MONITORS"
-                      imageClass="fa fa-database fa-fw"
-                      link="/monitor">
+        <cd-info-card title="Monitors"
+                      cardClass="col-md-3">
           <span class="media-text">{{ contentData.mon_status | monSummary }}</span>
         </cd-info-card>
 
         <cd-info-card title="OSDs"
-                      imageClass="fa fa-hdd-o fa-fw"
-                      link="/osd">
+                      cardClass="col-md-3">
           <span class="media-text">{{ contentData.osd_map | osdSummary }}</span>
         </cd-info-card>
-      </div>
-      <div class="row">
-        <cd-info-card title="METADATA SERVERS"
-                      imageClass="fa fa-folder fa-fw"
-        >
-          <span class="media-text">{{ contentData.fs_map | mdsSummary }}</span>
-        </cd-info-card>
 
-        <cd-info-card title="MANAGER DAEMONS"
-                      imageClass="fa fa-cog fa-fw"
-        >
+        <cd-info-card title="Manager Daemons"
+                      cardClass="col-md-3">
           <span class="media-text">{{ contentData.mgr_map | mgrSummary }}</span>
         </cd-info-card>
+
+        <cd-info-card title="Hosts"
+                      cardClass="col-md-3">
+          <span class="media-text">7</span>
+        </cd-info-card>
+
+        <cd-info-card title="Object Gateways"
+                      cardClass="col-md-3">
+          <span class="media-text">3</span>
+        </cd-info-card>
+        <cd-info-card title="Metadata Servers"
+                      cardClass="col-md-3">
+          <span class="media-text">2 (1 active)</span>
+        </cd-info-card>
+
+        <cd-info-card title="iSCSI Gateways"
+                      cardClass="col-md-3">
+          <span class="media-text">N/A</span>
+        </cd-info-card>
       </div>
-    </div>
+    </fieldset>
   </div>
 
   <div class="row">
@@ -124,47 +126,6 @@
               </tr>
             </tbody>
           </table>
-        </fieldset>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <!-- LOGS -->
-      <div class="well"
-           *ngIf="contentData.clog || contentData.audit_log">
-        <fieldset>
-          <legend i18n>Logs</legend>
-
-          <tabset>
-            <tab heading="Cluster log"
-                 class="text-monospace"
-                 *ngIf="contentData.clog"
-                 i18n-heading>
-              <span *ngFor="let line of contentData.clog">
-                {{ line.stamp }}&nbsp;{{ line.priority }}&nbsp;
-                <span [ngStyle]="line | logColor">
-                  {{ line.message }}
-                  <br>
-                </span>
-              </span>
-            </tab>
-            <tab heading="Audit log"
-                 class="text-monospace"
-                 *ngIf="contentData.audit_log"
-                 i18n-heading>
-              <span *ngFor="let line of contentData.audit_log">
-                {{ line.stamp }}&nbsp;{{ line.priority }}&nbsp;
-                <span [ngStyle]="line | logColor">
-                  <span style="font-weight: bold;">
-                    {{ line.message }}
-                  </span>
-                  <br>
-                </span>
-              </span>
-            </tab>
-          </tabset>
         </fieldset>
       </div>
     </div>
